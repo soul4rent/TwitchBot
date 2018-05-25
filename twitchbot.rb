@@ -32,17 +32,27 @@ class TBot
 		write_sys "PRIVMSG ##{@channel} : #{m}"
 	end
 
-	#gets messages from IRC and prints them to the console
+	#gets messages from IRC and performs various actions
 	def run
 		until @socket.eof? do
-			m = @socket.gets
-			puts m
-			write_chat "[bot] Hello There"
+			m = @socket.gets.chomp #get message from user
+			usrAndMessage = m.partition("#").last
+			onlyMessage = usrAndMessage.partition(":").last
+			onlyUsr = usrAndMessage.partition(":").first
+			puts usrAndMessage
+			puts onlyUsr
+			puts onlyMessage
+
+			#a prequel meme to test if things work
+			if onlyMessage.eql? "GENERAL KENOBI"
+				write_chat("[Bot] hello there")
+			end
+
 		end
 	end
 
 end
 
-#in theory code should run here.
+#BOT AUTOMATICALLY RUNNING HERE
 robot = TBot.new
 robot.run
