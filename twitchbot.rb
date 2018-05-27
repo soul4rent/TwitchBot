@@ -44,12 +44,25 @@ class TBot
 			puts onlyMessage
 
 			#a prequel meme to test if things work
-			if onlyMessage.eql? "GENERAL KENOBI"
-				write_chat("[Bot] hello there")
-			end
-
+			checkPrequelMeme onlyMessage
 		end
 	end
+
+	#a bunch of checking for prequel memes
+	#early testing for now. Change to something better if I want a large number
+	#memes, I'll change it to a database or something.
+	def checkPrequelMeme(text)
+		if text.eql? "GENERAL KENOBI"
+			write_chat("[Bot] hello there")
+		end
+
+		if text.eql? "am I a jedi master now"
+			write_chat("[Bot] No, but you are on the council.")
+		end
+
+	end
+
+
 
 end
 
