@@ -7,7 +7,8 @@ fileObject = File.new("oauthtoken.txt")
 TWITCH_OAUTH_TOKEN_STRING = File.read(fileObject)
 TWITCH_HOST = "irc.twitch.tv"
 TWITCH_PORT = 6667 #default IRC port
-PYRAMID_COUNT = 0
+$pyramid_count = 0
+$pyramid_str = "*"
 
 class TBot
 
@@ -46,6 +47,7 @@ class TBot
 
 			#a prequel meme to test if things work
 			checkPrequelMeme onlyMessage
+			memeCommand onlyMessage
 		end
 	end
 
@@ -64,20 +66,21 @@ class TBot
 	end
 
 	def memeCommand(text)
-	
-		#lets see if I did this right.
-		if text.eql? "*" and PYRAMID_COUNT == 0
-			PYRAMID_COUNT++
-		end
-		
-		if text.scan(/*/).count == PYRAMID_COUNT+1
-			PYRAMID_COUNT++
-		else
-			PYRAMID_COUNT = 0
-			write_chat("[BOT] PYRAMID BROKEN. GOOD TRY.")
-		end
-end
 
+		#check pyramid
+		if text.eql? $pyramid_str #pyramid continues
+			$pyramid_count = $pyramid_count + 1
+			$pyramid_str = $pyramid_str + "*"
+			puts $pyramid_count
+			puts $pyramid_str
+		elsif $pyramid_count > 0 #pyramid is broken
+			$pyramid_count = 0
+			$pyramid_str = "*"
+			write_chat("[bot] PYRAMID COMBO BROKEN!")
+		end
+
+	end
+end
 #BOT AUTOMATICALLY RUNNING HERE
 robot = TBot.new
 robot.run
